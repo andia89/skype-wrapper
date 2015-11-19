@@ -39,7 +39,7 @@ class SkypeIndicator():
         self.notification = Notify.Notification.new("skype", "skype", 'skype')
         self.missed = []
         self.skype = Skype4Py.Skype()
-        self.loadSkype()
+        self.load_skype()
         self.mmapp = MessagingMenu.App.new("skype.desktop")
         self.mmapp.register()
         stat = self.skype.CurrentUserStatus
@@ -141,7 +141,7 @@ class SkypeIndicator():
         except:
             pass  # weird error catched here
 
-    def loadSkype(self):
+    def load_skype(self):
         counter = 0
         while True:
             if self.skype.Client.IsRunning:
@@ -161,12 +161,12 @@ class SkypeIndicator():
             except Exception:
                 print Exception
 
-    def changeSkypeStatus(self, status):
+    def change_skype_status(self, status):
         self.change_status = True
         t1 = threading.Thread(target=self.skype.ChangeUserStatus, args=(status,))
         t1.start()
 
-    def checkMessages(self):
+    def check_messages(self):
         t1 = threading.Thread(target=self.check)
         t1.start()
         return True
@@ -183,7 +183,7 @@ class SkypeIndicator():
         self.control2 = False
         self.control = True
 
-    def checkSkype(self):
+    def check_skype(self):
         if not self.skype.Client.IsRunning:
             print 'closing everything'
             sys.exit(0)
@@ -196,11 +196,11 @@ class SkypeIndicator():
 
     def _on_set_status(self, mmap, status):
         print 'status changed to %s' % status2_conv[status]
-        self.changeSkypeStatus(status2_conv[status])
+        self.change_skype_status(status2_conv[status])
         self.change_status = False
 
     def main(self):
-        GLib.timeout_add(500, self.checkSkype)
+        GLib.timeout_add(500, self.check_skype)
         GLib.timeout_add(500, self.set_indicator)
         GLib.MainLoop().run()
         return 0
