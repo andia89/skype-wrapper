@@ -9,6 +9,7 @@ import threading
 import time
 import os
 import sys
+import signal
 import subprocess
 import socket
 from gettext import lgettext as _
@@ -16,7 +17,6 @@ from operator import itemgetter
 
 status_conv = {'ONLINE': MessagingMenu.Status.AVAILABLE, 'AWAY': MessagingMenu.Status.AWAY, 'DND': MessagingMenu.Status.BUSY, 'INVISIBLE': MessagingMenu.Status.INVISIBLE, 'OFFLINE': MessagingMenu.Status.OFFLINE}
 status2_conv = {0: 'ONLINE', 1: 'AWAY', 2: 'DND', 3: 'INVISIBLE', 4: 'OFFLINE'}
-
 
 def get_lock(process_name):
     global lock_socket
@@ -26,9 +26,12 @@ def get_lock(process_name):
         print 'I got the lock'
         return True
     except socket.error:
-        print 'skype-wrapper already running'
         return False
 
+
+def signal_handler(signal, frame):
+    subprocess.Popen(['killall skype'], shell=True)
+    sys.exit(0)
 
 class SkypeIndicator():
 
@@ -198,6 +201,7 @@ class SkypeIndicator():
         self.change_status = False
 
     def main(self):
+        subprocess.Popen(['/usr/bin/skype'])
         GLib.timeout_add(500, self.check_skype)
         GLib.timeout_add(500, self.set_indicator)
         GLib.MainLoop().run()
@@ -209,5 +213,5 @@ if __name__ == "__main__":
         s = SkypeIndicator()
         s.main()
     else:
-        subprocess.Popen(['/usr/bin/skype'], shell=True)
+        subprocess.Popen(['/usr/bin/skype'])
 
