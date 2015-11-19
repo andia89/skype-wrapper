@@ -14,8 +14,6 @@ import socket
 from gettext import lgettext as _
 from operator import itemgetter
 
-show_messages = True
-
 status_conv = {'ONLINE': MessagingMenu.Status.AVAILABLE, 'AWAY': MessagingMenu.Status.AWAY, 'DND': MessagingMenu.Status.BUSY, 'INVISIBLE': MessagingMenu.Status.INVISIBLE, 'OFFLINE': MessagingMenu.Status.OFFLINE}
 status2_conv = {0: 'ONLINE', 1: 'AWAY', 2: 'DND', 3: 'INVISIBLE', 4: 'OFFLINE'}
 
