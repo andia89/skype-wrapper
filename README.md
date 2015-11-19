@@ -1,5 +1,5 @@
 # skype-wrapper
-Wrapper to show skype in the messaging menu and use notify-send to show incoming messages
+Wrapper to show skype in the messaging menu and use notify-send to show incoming messages. Only works in Ubuntu Unity and with python 2.x (because the skype python api os only available in python 2.x)
 
 # Installation
 
