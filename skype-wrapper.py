@@ -29,10 +29,6 @@ def get_lock(process_name):
         return False
 
 
-def signal_handler(signal, frame):
-    subprocess.Popen(['killall skype'], shell=True)
-    sys.exit(0)
-
 class SkypeIndicator():
 
     def __init__(self):
